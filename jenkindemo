@@ -7,5 +7,12 @@ pipeline {
                 git credentialsId: '9920cb55-21cd-4867-ba86-16ae9ea7fe7a', url: 'https://github.com/viveksawant100/myweb.git'   
             }
         }
+		
+		stage ("Maven Build"){
+            steps{
+                sh "mvn clean package"  
+            }
+        }
     }
 }
+
