@@ -1,6 +1,8 @@
 pipeline {
     agent any
-    
+    tools {
+      maven_local: 'Maven 3.8.5'
+    }
     stages{
         stage ("Git Checkout"){
             steps{
@@ -8,7 +10,7 @@ pipeline {
             }
         }
 		
-		stage ("Maven Build"){
+	 stage ("Maven Build"){
             steps{
                 sh "mvn clean package"  
             }
