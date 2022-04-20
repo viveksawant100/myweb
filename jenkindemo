@@ -11,11 +11,26 @@ pipeline {
             }
         }
 		
-	 stage ("Maven Build"){
+    stage ("Maven Build"){
             steps{
-                sh "mvn clean package"  
+                sh "mvn clean package"
+		        sh "mv target/*.war target/myweb.war"
             }
         }
+	
+    stage ("Deploy on Tomcat"){
+            steps{
+               sshagent(['Deploy_war_1']) {
+                 sh """
+		  ssh -o StrictHostKeyChecking=no target/myweb.war cloud_user@172.31.127.116:/opt/tomcat/latest/webapps/
+		  
+		  ssh cloud_user@172.31.127.116 /opt/tomcat/latest/bin/shutdown.sh
+		  
+		  ssh cloud_user@172.31.127.116 /opt/tomcat/latest/bin/startup.sh
+		 """
+               }  
+            }
+        }  	
     }
 }
 
