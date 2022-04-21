@@ -20,9 +20,9 @@ pipeline {
 	
     stage ("Deploy on Tomcat"){
             steps{
-               sshagent(['deploy']) {
+               sshagent(credentials:['deploy']) {
                  sh """
-		  scp -v -i StrictHostKeyChecking=no target/myweb.war cloud_user@172.31.127.116:/opt/tomcat/apache-tomcat-9.0.62/webapps/
+		  ssh -o StrictHostKeyChecking=no target/myweb.war cloud_user@172.31.127.116:/opt/tomcat/latest/webapps/
 		  
 		  ssh cloud_user@172.31.127.116 /opt/tomcat/latest/bin/shutdown.sh
 		  
