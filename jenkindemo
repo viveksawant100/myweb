@@ -20,7 +20,7 @@ pipeline {
 	
     stage ("Deploy on Tomcat"){
             steps{
-               sshagent(credentials:['deploy']) {
+               sshagent(['demo']) {
                  sh """
 		  ssh -o StrictHostKeyChecking=no target/myweb.war cloud_user@172.31.127.116:/opt/tomcat/latest/webapps/
 		  
@@ -33,5 +33,4 @@ pipeline {
         }  	
     }
 }
-
 
